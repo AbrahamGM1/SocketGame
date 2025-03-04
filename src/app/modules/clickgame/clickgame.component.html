@@ -1,0 +1,19 @@
+<div class="bg-slate-800 h-screen flex">
+
+    <div class="flex flex-col w-3/6 items-center text-sky-300">
+        <div class="screen w-4/6 h-3/6 bg-slate-900 rounded-xl my-4 content-center">
+            <h1 class="text-9xl text-center">
+                {{current_level}}
+            </h1>
+        </div>
+        <button type="button" (click)="levelup();" class="button w-4/6 bg-indigo-600 text-white rounded-lg px-4 py-2 active:bg-indigo-700 hover:px-5 hover:py-2.5 active:px-4 active:py-2">LEVEL UP</button>
+    </div>
+
+    <div class="flex flex-col w-3/6 items-center text-orange-300">
+        <div class="screen w-4/6 h-5/6 bg-slate-900 rounded-xl my-4 content-center">
+            <h1 class="text-9xl text-center">
+                {{enemy_level}}
+            </h1>
+        </div>
+    </div>
+</div>
