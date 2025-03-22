@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { WebsocketService } from '../../services/websocket.service';
 
 
 @Component({
@@ -12,6 +15,21 @@ export class ClickgameComponent {
 
   current_level:number = 0;
   enemy_level:number = 0;
+  room_id:string|null = '';
+
+  constructor(private router:ActivatedRoute, private cookieService:CookieService, private websocket:WebsocketService){
+
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.room_id = this.router.snapshot.paramMap.get('idroom')
+    
+    if(this.room_id!==null){
+      this.cookieService.set('idroom',this.room_id)
+    }
+  }
 
   levelup(){
     this.current_level++
