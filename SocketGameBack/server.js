@@ -15,6 +15,16 @@ io.on('connection',(socket)=>{
     const {idRoom} = socket.handshake.query;
 
     console.log(`Hola usuario:${idConnection} bienvenido a la sala -${idRoom}-`)
+
+    socket.join(idRoom);
+
+    socket.on('message', (res)=>{
+      const data = res;
+      console.log(res)
+
+      //El socket.to sirve para enviar los datos a todos los usuarios del grupo menos al autor
+      socket.to(idRoom).emit('message',data)
+    })
 })
 
 server.listen(3000,()=>{

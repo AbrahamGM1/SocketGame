@@ -18,7 +18,10 @@ export class ClickgameComponent {
   room_id:string|null = '';
 
   constructor(private router:ActivatedRoute, private cookieService:CookieService, private websocket:WebsocketService){
-
+    websocket.callback.subscribe(res =>{
+      console.log(res)
+      this.enemy_level = res.level;
+    })
   }
 
   ngOnInit(): void {
@@ -33,6 +36,8 @@ export class ClickgameComponent {
 
   levelup(){
     this.current_level++
+    const level = this.current_level
+    this.websocket.emitEvent({level})
   }
 
 }

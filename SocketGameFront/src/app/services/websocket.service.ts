@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Socket } from 'ngx-socket-io';
 
@@ -6,6 +6,8 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root'
 })
 export class WebsocketService extends Socket {
+
+ callback:EventEmitter<any> = new EventEmitter();
 
   constructor(private cookieService:CookieService) { 
     super({
@@ -17,7 +19,6 @@ export class WebsocketService extends Socket {
       }
     });
 
-
     this.on('connect', () => {
       console.log('✅ Conectado al servidor de WebSockets con ID:', this.ioSocket.id);
     });
@@ -26,5 +27,18 @@ export class WebsocketService extends Socket {
       console.log('❌ Desconectado del servidor de WebSockets');
     });
 
+    this.listen();
+
   }
+
+  listen = () =>{
+    this.ioSocket.on('message', (data:any) => {
+      this.callback.emit(data)
+      });   
+  }
+
+  emitEvent = (payload = {}) =>{
+    this.ioSocket.emit('message',payload);
+  }
+
 }
