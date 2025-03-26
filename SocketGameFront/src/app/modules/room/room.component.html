@@ -1,1 +1,44 @@
-<p>room works!</p>
+<div class="flex w-full h-screen bg-gradient-to-r from-[#0A192F] to-[#1B1F3B] justify-center">
+
+    <div class="w-[90%]">
+        <div class="flex w-full h-[calc(100vh-90vh)] items-center justify-center">
+            <h1 class="text-5xl font-bold text-[#48CAE4]">PLAYGROUND</h1>
+        </div>
+        <div class="flex w-full h-[calc(100vh-10vh)]">
+
+            <div class="flex flex-col h-full w-2/5 justify-center items-center mx-2">
+                <button type="button" *ngFor="let game of games" class="button w-64 h-24 mx-4 my-4 bg-[#FF4F5A] 
+                text-white rounded-lg px-4 py-2 active:bg-[#3d5ada] text-2xl
+                hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2" (click)="changeDescription(game)">{{game}}</button>
+            </div>
+    
+    
+            <div class="flex flex-col h-full w-3/5 text-[#48CAE4] items-center justify-center mx-2">
+
+                <p class="text-2xl">
+                    {{currentDescription}}
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi aut labore odio suscipit neque
+                    sapiente, repudiandae recusandae dolore consectetur alias. Recusandae adipisci nobis natus vitae dolorem
+                    ipsum voluptate expedita.
+                </p>
+    
+                <div class="my-3 w-full">
+                    <input class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]" type="text" id="idroom" formControlName="room"
+                        placeholder="Room ID">
+                </div>
+    
+                <div class="flex w-full gap-4">
+                    <button type="button" class="button w-2/4 h-12 my-4 bg-green-700 
+                    text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
+                    hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2">CREATE</button>
+                <button type="button" class="button w-2/4 h-12 my-4 bg-green-700 
+                    text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
+                    hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2">JOIN</button>
+                </div>
+    
+    
+            </div>
+        </div>
+    </div>
+
+</div>
