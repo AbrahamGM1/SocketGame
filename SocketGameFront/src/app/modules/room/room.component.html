@@ -8,35 +8,72 @@
 
             <div class="flex flex-col h-full w-2/5 justify-center items-center mx-2">
                 <button type="button" *ngFor="let game of games" class="button w-64 h-24 mx-4 my-4 bg-[#FF4F5A] 
-                text-white rounded-lg px-4 py-2 active:bg-[#3d5ada] text-2xl
-                hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2" (click)="changeDescription(game)">{{game}}</button>
+                text-white rounded-lg px-4 py-2 active:bg-[#4361EE] text-2xl
+                hover:bg-[#ef5f70] hover:py-2.5 active:px-4 active:py-2"
+                    (click)="changeDescription(game)">{{game}}</button>
             </div>
-    
-    
+
+
             <div class="flex flex-col h-full w-3/5 text-[#48CAE4] items-center justify-center mx-2">
 
                 <p class="text-2xl">
-                    {{currentDescription}}
+                    {{gameSelected}}
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi aut labore odio suscipit neque
-                    sapiente, repudiandae recusandae dolore consectetur alias. Recusandae adipisci nobis natus vitae dolorem
+                    sapiente, repudiandae recusandae dolore consectetur alias. Recusandae adipisci nobis natus vitae
+                    dolorem
                     ipsum voluptate expedita.
                 </p>
-    
-                <div class="my-3 w-full">
-                    <input class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]" type="text" id="idroom" formControlName="room"
-                        placeholder="Room ID">
-                </div>
-    
+
+
                 <div class="flex w-full gap-4">
+
                     <button type="button" class="button w-2/4 h-12 my-4 bg-green-700 
                     text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
-                    hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2">CREATE</button>
-                <button type="button" class="button w-2/4 h-12 my-4 bg-green-700 
+                    hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2 cursor-pointer"
+                    (click)="selectOption(true)"
+                    >CREATE ROOM</button>
+                    <button type="button" class="button w-2/4 h-12 my-4 bg-green-700 
                     text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
-                    hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2">JOIN</button>
+                    hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2 cursor-pointer"
+                    (click)="selectOption(false)"
+                    >JOIN ROOM</button>
+
                 </div>
-    
-    
+
+                <!--CREATE -->
+                <div class="w-full" *ngIf="optionSelected && isCreate">
+                    <form class="w-full" [formGroup]="formCreate" (ngSubmit)="sendFormCreate()">
+                        <div class="my-3 flex gap-4 w-full">
+                            <input
+                                class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]"
+                                type="text" id="idroom" formControlName="idroom" placeholder="Enter the room ID to create">
+                                <button type="submit" [disabled]="formCreate.invalid" class="button w-2/4 h-12 bg-green-700 
+                                text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
+                                hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2 cursor-pointer">CREATE</button>
+                            </div>
+                            <div *ngIf="formCreate.get('idroom')?.invalid && formCreate.get('idroom')?.touched">
+                                <small>Enter the room ID before starting</small>
+                            </div>
+                    </form>
+                </div>
+
+                <!--JOIN -->
+                <div class="w-full" *ngIf="optionSelected && isJoin">
+                    <form class="w-full" [formGroup]="formJoin" (ngSubmit)="sendFormJoin()">
+                        <div class="my-3 flex gap-4 w-full">
+                            <input
+                                class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]"
+                                type="text" id="idroom" formControlName="idroom" placeholder="Enter the room ID to join">
+                                <button type="submit" [disabled]="formJoin.invalid" class="button w-2/4 h-12 bg-green-700 
+                                text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
+                                hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2 cursor-pointer">JOIN</button>
+                            </div>
+                            <div *ngIf="formJoin.get('idroom')?.invalid && formJoin.get('idroom')?.touched">
+                                <small>Enter the room ID before joining</small>
+                            </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
