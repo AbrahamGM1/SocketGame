@@ -12,11 +12,11 @@ const io = require('socket.io')(server, {
 io.on('connection',(socket)=>{
     const idConnection = socket.id;
 
-    const {idRoom} = socket.handshake.query;
+    const {idRoom, playerName} = socket.handshake.query;
 
-    console.log(`Hola usuario:${idConnection} bienvenido a la sala -${idRoom}-`)
+    console.log(`Hola usuario:${playerName} bienvenido a la sala -${idRoom}-`)
 
-    socket.join(idRoom);
+    socket.join(idRoom, playerName);
 
     socket.on('message', (res)=>{
       const data = res;
@@ -25,6 +25,13 @@ io.on('connection',(socket)=>{
       //El socket.to sirve para enviar los datos a todos los usuarios del grupo menos al autor
       socket.to(idRoom).emit('message',data)
     })
+
+
+    socket.on('playername', (res) =>{
+      const data = res;
+      socket.to(idRoom).emit('playername',data)
+    })
+
 })
 
 server.listen(3000,()=>{

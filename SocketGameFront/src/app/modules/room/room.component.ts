@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-room',
@@ -22,13 +23,15 @@ export class RoomComponent {
   isCreate:boolean = false;
   isJoin:boolean = false;
 
-  constructor(private fb:FormBuilder, private router:Router){
+  constructor(private fb:FormBuilder, private router:Router, private cookieService:CookieService){
     this.formJoin = fb.group({
-      idroom: ['',[Validators.required]]
+      idroom: ['',[Validators.required]],
+      playername: ['',[Validators.required]]
     })
 
     this.formCreate = fb.group({
-      idroom: ['',[Validators.required]]
+      idroom: ['',[Validators.required]],
+      playername: ['',[Validators.required]]
     })
   }
 
@@ -38,12 +41,18 @@ export class RoomComponent {
 
   sendFormJoin(){
     if (this.formJoin.valid) {
+      //guarda el id en una cookie y abre la ruta del juego
+      this.cookieService.set('idroom',this.formJoin.value.idroom)
+      this.cookieService.set('playername',this.formJoin.value.playername)
       this.router.navigate(['/clickgame/'+this.formJoin.value.idroom])
     } 
   }
 
   sendFormCreate(){
     if(this.formCreate.valid){
+      //guarda el id en una cookie y abre la ruta del juego
+      this.cookieService.set('idroom',this.formCreate.value.idroom)
+      this.cookieService.set('playername',this.formJoin.value.playername)
       this.router.navigate(['/clickgame/'+this.formCreate.value.idroom])
     }
   }

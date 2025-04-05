@@ -64,13 +64,25 @@
                             <input
                                 class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]"
                                 type="text" id="idroom" formControlName="idroom" placeholder="Enter the room ID to join">
-                                <button type="submit" [disabled]="formJoin.invalid" class="button w-2/4 h-12 bg-green-700 
+
+                            <input
+                                class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]"
+                                type="text" id="playername" formControlName="playername" placeholder="Enter your player name">
+
+                            <button type="submit" [disabled]="formJoin.invalid" class="button w-2/4 h-12 bg-green-700 
                                 text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
                                 hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2 cursor-pointer">JOIN</button>
+
                             </div>
                             <div *ngIf="formJoin.get('idroom')?.invalid && formJoin.get('idroom')?.touched">
-                                <small>Enter the room ID before joining</small>
+                                <small>Enter the room ID and player name before joining</small>
                             </div>
+                            <div *ngIf="formJoin.get('playername')?.invalid && formJoin.get('playername')?.touched">
+                                <small>Enter player name before joining</small>
+                            </div>
+
+
+
                     </form>
                 </div>
 

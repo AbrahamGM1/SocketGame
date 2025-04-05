@@ -8,13 +8,16 @@ import { Socket } from 'ngx-socket-io';
 export class WebsocketService extends Socket {
 
  callback:EventEmitter<any> = new EventEmitter();
+ nameCallback:EventEmitter<any> = new EventEmitter();
+
 
   constructor(private cookieService:CookieService) { 
     super({
       url:'http://localhost:3000',
       options:{
         query:{
-          idRoom:cookieService.get('idroom')
+          idRoom:cookieService.get('idroom'),
+          playerName:cookieService.get('playername')
         }
       }
     });
@@ -35,10 +38,19 @@ export class WebsocketService extends Socket {
     this.ioSocket.on('message', (data:any) => {
       this.callback.emit(data)
       });   
+
+    this.ioSocket.on('playername', (playerName:any) =>{
+      console.log(playerName)
+      this.nameCallback.emit(playerName)
+    })
   }
 
   emitEvent = (payload = {}) =>{
     this.ioSocket.emit('message',payload);
+  }
+
+  emitPlayerName = (playerName:String) =>{
+    this.ioSocket.emit('playername',playerName)
   }
 
 }
