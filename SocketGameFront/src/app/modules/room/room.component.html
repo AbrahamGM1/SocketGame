@@ -44,13 +44,21 @@
                 <div class="w-full" *ngIf="optionSelected && isCreate">
                     <form class="w-full" [formGroup]="formCreate" (ngSubmit)="sendFormCreate()">
                         <div class="my-3 flex gap-4 w-full">
+                            
                             <input
                                 class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]"
                                 type="text" id="idroom" formControlName="idroom" placeholder="Enter the room ID to create">
-                                <button type="submit" [disabled]="formCreate.invalid" class="button w-2/4 h-12 bg-green-700 
+                                
+                            <input
+                                class="w-full h-12 px-4 rounded-md text-[#48CAE4] bg-transparent border-x border-y border-[#48CAE4]"
+                                type="text" id="playername" formControlName="playername" placeholder="Enter your player name">
+
+
+                            <button type="submit" [disabled]="formCreate.invalid" class="button w-2/4 h-12 bg-green-700 
                                 text-white rounded-lg px-4 py-2 active:bg-[#3d5ada]
                                 hover:bg-[#4361EE] hover:py-2.5 active:px-4 active:py-2 cursor-pointer">CREATE</button>
                             </div>
+                            
                             <div *ngIf="formCreate.get('idroom')?.invalid && formCreate.get('idroom')?.touched">
                                 <small>Enter the room ID before starting</small>
                             </div>

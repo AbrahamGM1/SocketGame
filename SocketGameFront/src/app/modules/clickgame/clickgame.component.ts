@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { WebsocketService } from '../../services/websocket.service';
 import { interval, Subscription } from 'rxjs';
@@ -23,7 +23,8 @@ export class ClickgameComponent {
 
   private subscription!: Subscription
 
-  constructor(private router:ActivatedRoute, private cookieService:CookieService, private websocket:WebsocketService){
+  constructor(private activatedroute:ActivatedRoute, private router:Router, private cookieService:CookieService, private websocket:WebsocketService){
+    
     websocket.callback.subscribe(res =>{
       console.log(res)
       this.enemy_level = res.level;
@@ -36,16 +37,26 @@ export class ClickgameComponent {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.room_id = this.router.snapshot.paramMap.get('idroom')
+
+    window.addEventListener('popstate', (event) => {
+      this.router.navigate([''], {replaceUrl:true});
+    });
+
+    //Comprobar si hay espacio dentro de la sala
+    
+    //-----
+
+    this.room_id = this.activatedroute.snapshot.paramMap.get('idroom')
     this.player_name = this.cookieService.get('playername')
 
     
     if(this.room_id!==null){
       this.cookieService.set('idroom',this.room_id)
     }
+    //Si no existe sacalo y lo borras en el server
+    if(this.player_name){
 
+    }
     //Manda el nombre del jugador al socket para que le aparezca el nombre al otro jugador
     this.websocket.emitPlayerName(this.player_name)
     /**
@@ -59,9 +70,15 @@ export class ClickgameComponent {
         this.subscription.unsubscribe();
       }
     })
-
-    
      */
+  }
+
+  ngOnDestroy(): void {
+    
+    //this.websocket.disconnect();
+
+    this.cookieService.delete('idroom');
+    this.cookieService.delete('playername');
   }
 
   levelup(){

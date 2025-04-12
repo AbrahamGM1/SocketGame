@@ -27,7 +27,9 @@ export class WebsocketService extends Socket {
     });
 
     this.on('disconnect', () => {
+      
       console.log('❌ Desconectado del servidor de WebSockets');
+
     });
 
     this.listen();
@@ -52,5 +54,7 @@ export class WebsocketService extends Socket {
   emitPlayerName = (playerName:String) =>{
     this.ioSocket.emit('playername',playerName)
   }
+
+
 
 }
