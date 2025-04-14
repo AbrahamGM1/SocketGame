@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<div *ngIf="menu">
+    <app-room (game)="goToGame($event)">
+    </app-room>
+</div>
+<div *ngIf="clickgame">
+    <app-clickgame>
+    </app-clickgame>
+</div>
